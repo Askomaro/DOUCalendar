@@ -57,11 +57,11 @@ class ArticleRetriever {
                 
                 articlesModel.append(Article(
                     title: articleTitle,
-                    city: String(data[1]),
+                    city: String(data[1].trimmingCharacters(in: .whitespacesAndNewlines)),
                     date: String(data[0].trimmingCharacters(in: .whitespacesAndNewlines)),
                     cost: String(data.last!.trimmingCharacters(in: .whitespacesAndNewlines)),
                     imageURL: URL(string: articleImageUrl.text!)!,
-                    description: articleDescription.text!))
+                    description: articleDescription.text!.trimmingCharacters(in: .whitespacesAndNewlines)))
             }
             
         }

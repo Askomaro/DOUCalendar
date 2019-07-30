@@ -21,7 +21,8 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: "articelTableViewCell")
-        
+
+
 //      Make async http call to dou calendar and map to ArticlesModel
 //      after it finished then call closure where set ArticlesModel and reload tableView
 //      DispatchQueue.main.async ???
@@ -42,7 +43,7 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "articelTableViewCell") as! ArticleTableViewCell
         
         cell.mainLabelTitle.text = articlesModel[indexPath.row].title
-        cell.infoLabel.text = articlesModel[indexPath.row].city
+        cell.infoLabel.text = "\(articlesModel[indexPath.row].date)\t\(articlesModel[indexPath.row].city)\t\(articlesModel[indexPath.row].cost)"
         cell.mainImageView.sd_setImage(with : articlesModel[indexPath.row].imageURL)
         cell.textView.text = articlesModel[indexPath.row].description
         
@@ -50,6 +51,6 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 130
     }
 }
