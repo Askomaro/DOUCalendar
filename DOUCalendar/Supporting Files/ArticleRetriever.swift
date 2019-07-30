@@ -45,19 +45,23 @@ class ArticleRetriever {
                 { fatalError("Cannot find h2 web element with a title for an article.") }
                 let articleTitle = articleTitleWE.text!.trimmingCharacters(in: .whitespacesAndNewlines)
                 
-                guard let articleImageUrl = articleTitleWE.at_xpath("//img/@src") else
+                guard let articleImageUrl = articleTitleWE.at_xpath("a/img/@src") else
                 { fatalError("Cannot find imageUrl for an article.") }
                 
                 guard let articleDetailesWE = article.at_xpath("div[contains(@class, 'when-and-where')]") else
-                { fatalError("Cannot find div web element with a where and when detailes.") }
+                { fatalError("Cannot find div web element with a 'where and when' detailes.") }
                 let data = articleDetailesWE.text!.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
 
+                guard let articleDescription = article.at_xpath("p[contains(@class, 'b-typo')]") else
+                { fatalError("Cannot find article description web element.") }
+                
                 articlesModel.append(Article(
                     title: articleTitle,
                     city: String(data[1]),
                     date: String(data[0].trimmingCharacters(in: .whitespacesAndNewlines)),
                     cost: String(data.last!.trimmingCharacters(in: .whitespacesAndNewlines)),
-                    imageURL: URL(string: articleImageUrl.text!)!))
+                    imageURL: URL(string: articleImageUrl.text!)!,
+                    description: articleDescription.text!))
             }
             
         }

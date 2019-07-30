@@ -21,4 +21,6 @@ struct Article {
     
     let imageURL: URL
     
+    let description : String
+    
 }
