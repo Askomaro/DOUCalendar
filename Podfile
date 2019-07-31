@@ -9,4 +9,5 @@ target 'DOUCalendar' do
     pod 'Alamofire'
     pod 'Kanna'
     pod 'SDWebImage'
+    pod 'SVProgressHUD'
 end

@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Kanna
 import SDWebImage
+import SVProgressHUD
 
 class ArticlesTableVC: UITableViewController {
     @IBOutlet var articleTableView: UITableView!
@@ -20,13 +21,19 @@ class ArticlesTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SVProgressHUD.setDefaultStyle(.light)
+        SVProgressHUD.setDefaultAnimationType(.native)
+        
+        SVProgressHUD.show()
+        
         self.tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: "articelTableViewCell")
-
 
 //      Make async http call to dou calendar and map to ArticlesModel
 //      after it finished then call closure where set ArticlesModel and reload tableView
 //      DispatchQueue.main.async ???
         articleRetriever.getArticlesModel{
+            SVProgressHUD.dismiss()
+            
             self.articlesModel = $0
             
             self.articleTableView.reloadData()
@@ -51,12 +58,12 @@ class ArticlesTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        SVProgressHUD.show()
         
         performSegue(withIdentifier: "goToArticle", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         let destinationVC = segue.destination as! ArticleViewController
         let selectedArticleModel = articlesModel[tableView.indexPathForSelectedRow!.row]
         
@@ -65,6 +72,8 @@ class ArticlesTableVC: UITableViewController {
         
         // Just retrieve full article description
         articleRetriever.getExtendedArticleModel(url: selectedArticleModel.extendedArticleUrl, completionHandler: {
+            SVProgressHUD.dismiss()
+
             destinationVC.extendedArticleModel = $0
             
             destinationVC.updateUI()
