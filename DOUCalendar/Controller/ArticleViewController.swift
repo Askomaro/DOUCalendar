@@ -22,6 +22,7 @@ class ArticleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.tintColor = .white
     }
     
     public func updateUI() {
@@ -29,7 +30,7 @@ class ArticleViewController: UIViewController {
         MainImageView.sd_setImage(with: extendedArticleModel.imageURL)
         TextView.text = extendedArticleModel.fullDescription
         
-        MainImageView.layer.cornerRadius = 5
+        title = MainTitleLabel.text
     }
 
 //  MARK: - Navigation

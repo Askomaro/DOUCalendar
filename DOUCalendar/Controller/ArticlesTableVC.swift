@@ -68,7 +68,6 @@ class ArticlesTableVC: UITableViewController {
         let selectedArticleModel = articlesModel[tableView.indexPathForSelectedRow!.row]
         
         destinationVC.articleModel = selectedArticleModel
-//        destinationVC.MainImageView.sd_setImage(with : selectedArticleModel.imageURL)
         
         // Just retrieve full article description
         articleRetriever.getExtendedArticleModel(url: selectedArticleModel.extendedArticleUrl, completionHandler: {
