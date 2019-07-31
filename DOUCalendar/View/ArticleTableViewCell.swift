@@ -17,9 +17,9 @@ class ArticleTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowRadius = 2
+        view.layer.shadowRadius = 3
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowOpacity = 1
+        view.layer.shadowOpacity = 3
         
         return view
     }()
@@ -29,8 +29,6 @@ class ArticleTableViewCell: UITableViewCell {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 5
-        
         
         return imageView
     }()
@@ -70,7 +68,7 @@ class ArticleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        imageViewBackground.addSubview(mainImageView)
+        self.imageViewBackground.addSubview(mainImageView)
         
         self.addSubview(imageViewBackground)
         self.addSubview(mainLabelTitle)
@@ -79,12 +77,12 @@ class ArticleTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
+        mainImageView.centerYAnchor.constraint(equalTo: imageViewBackground.centerYAnchor).isActive = true
+        mainImageView.widthAnchor.constraint(equalToConstant: 100 ).isActive = true
+        
         imageViewBackground.leftAnchor.constraint(equalTo: self.leftAnchor, constant: spaceConstant).isActive = true
         imageViewBackground.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         imageViewBackground.widthAnchor.constraint(equalToConstant: 100 ).isActive = true
-        
-        mainImageView.centerYAnchor.constraint(equalTo: imageViewBackground.centerYAnchor).isActive = true
-        mainImageView.widthAnchor.constraint(equalToConstant: 100 ).isActive = true
 
         mainLabelTitle.leftAnchor.constraint(equalTo: self.imageViewBackground.rightAnchor, constant: spaceConstant * 2).isActive = true
         mainLabelTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: spaceConstant).isActive = true
