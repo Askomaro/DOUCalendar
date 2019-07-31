@@ -15,8 +15,7 @@ class ArticleTableViewCell: UITableViewCell {
     var imageViewBackground: UIView = {
         var view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = false
-        
+
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 2
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -29,9 +28,9 @@ class ArticleTableViewCell: UITableViewCell {
         var imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 5
+        
         
         return imageView
     }()
@@ -80,27 +79,25 @@ class ArticleTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        
         imageViewBackground.leftAnchor.constraint(equalTo: self.leftAnchor, constant: spaceConstant).isActive = true
         imageViewBackground.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        mainImageView.centerYAnchor.constraint(equalTo: imageViewBackground.centerYAnchor).isActive = true
-        imageViewBackground.widthAnchor.constraint(equalToConstant: 120 ).isActive = true
+        imageViewBackground.widthAnchor.constraint(equalToConstant: 100 ).isActive = true
         
+        mainImageView.centerYAnchor.constraint(equalTo: imageViewBackground.centerYAnchor).isActive = true
+        mainImageView.widthAnchor.constraint(equalToConstant: 100 ).isActive = true
+
         mainLabelTitle.leftAnchor.constraint(equalTo: self.imageViewBackground.rightAnchor, constant: spaceConstant * 2).isActive = true
         mainLabelTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: spaceConstant).isActive = true
         mainLabelTitle.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-//        mainLabelTitle.heightAnchor.constraint(equalToConstant: 21).isActive = true
         
         textView.leftAnchor.constraint(equalTo: self.imageViewBackground.rightAnchor, constant: spaceConstant).isActive = true
-        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: self.infoLabel.bottomAnchor, constant: spaceConstant).isActive = true
+        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: spaceConstant).isActive = true
+        textView.topAnchor.constraint(equalTo: self.infoLabel.bottomAnchor).isActive = true
         textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
         infoLabel.leftAnchor.constraint(equalTo: self.mainLabelTitle.leftAnchor).isActive = true
         infoLabel.bottomAnchor.constraint(equalTo: self.textView.topAnchor).isActive = true
         infoLabel.topAnchor.constraint(equalTo: self.mainLabelTitle.bottomAnchor, constant: spaceConstant).isActive = true
-
-//        infoLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -spaceConstant).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
