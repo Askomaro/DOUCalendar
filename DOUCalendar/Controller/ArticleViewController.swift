@@ -22,6 +22,11 @@ class ArticleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MainImageView.layer.shadowColor = UIColor.black.cgColor
+        MainImageView.layer.shadowRadius = 3
+        MainImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        MainImageView.layer.shadowOpacity = 3
+        
         navigationController?.navigationBar.tintColor = .white
     }
     
@@ -32,7 +37,7 @@ class ArticleViewController: UIViewController {
         
         title = MainTitleLabel.text
     }
-
+    
 //  MARK: - Navigation
 //  In a storyboard-based application, you will often want to do a little preparation before navigation
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

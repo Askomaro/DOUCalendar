@@ -15,9 +15,12 @@ import SVProgressHUD
 class ArticlesTableVC: UITableViewController {
     @IBOutlet var articleTableView: UITableView!
     
-    var articlesModel : [ArticleModel] = []
-    let articleRetriever : ArticleRetriever = ArticleRetriever()
+    private var articlesModel : [ArticleModel] = []
     
+    private let articleRetriever : ArticleRetriever = ArticleRetriever()
+    
+    private let notification = UISelectionFeedbackGenerator()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,9 +31,15 @@ class ArticlesTableVC: UITableViewController {
         
         self.tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: "articelTableViewCell")
 
-//      Make async http call to dou calendar and map to ArticlesModel
-//      after it finished then call closure where set ArticlesModel and reload tableView
-//      DispatchQueue.main.async ???
+        updateUI()
+        
+        configureRefreshControl()
+    }
+
+    private func updateUI(){
+        //      Make async http call to dou calendar and map to ArticlesModel
+        //      after it finished then call closure where set ArticlesModel and reload tableView
+        //      DispatchQueue.main.async ???
         articleRetriever.getArticlesModel{
             SVProgressHUD.dismiss()
             
@@ -38,9 +47,23 @@ class ArticlesTableVC: UITableViewController {
             
             self.articleTableView.reloadData()
         }
-        
     }
-
+    
+    private func configureRefreshControl () {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action:#selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc func handleRefreshControl() {
+        updateUI()
+        
+        // Dismiss the refresh control.
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+            self.notification.selectionChanged()
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return articlesModel.count
