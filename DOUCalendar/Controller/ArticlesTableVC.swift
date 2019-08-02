@@ -24,6 +24,8 @@ class ArticlesTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigationBarImage()
+        
         SVProgressHUD.setDefaultStyle(.light)
         SVProgressHUD.setDefaultAnimationType(.native)
         
@@ -36,6 +38,10 @@ class ArticlesTableVC: UITableViewController {
         configureRefreshControl()
     }
 
+    private func setNavigationBarImage(){
+        self.navigationController?.navigationBar.barTintColor = UIColor(patternImage: #imageLiteral(resourceName: "header DOUE"))
+    }
+    
     private func updateUI(){
         //      Make async http call to dou calendar and map to ArticlesModel
         //      after it finished then call closure where set ArticlesModel and reload tableView
@@ -51,6 +57,7 @@ class ArticlesTableVC: UITableViewController {
     
     private func configureRefreshControl () {
         tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.tintColor = .white
         tableView.refreshControl?.addTarget(self, action:#selector(handleRefreshControl), for: .valueChanged)
     }
     
