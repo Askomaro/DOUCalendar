@@ -26,7 +26,7 @@ class ArticleRetriever {
                     completionHandler(articlesModel)
                 
                 case .failure(let error):
-                    fatalError("Error while querying database: \(String(describing: error))")
+                    print("Error while querying https://dou.ua/: \(String(describing: error))")
                 
             }
             

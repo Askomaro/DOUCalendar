@@ -26,10 +26,7 @@ class ArticlesTableVC: UITableViewController {
         
         setNavigationBarImage()
         
-        SVProgressHUD.setDefaultStyle(.light)
-        SVProgressHUD.setDefaultAnimationType(.native)
-        
-        SVProgressHUD.show()
+        setProgressBarForProcessing()
         
         self.tableView.register(ArticleTableViewCell.self, forCellReuseIdentifier: "articelTableViewCell")
 
@@ -38,14 +35,18 @@ class ArticlesTableVC: UITableViewController {
         configureRefreshControl()
     }
 
+    private func setProgressBarForProcessing(){
+        SVProgressHUD.setDefaultStyle(.light)
+        SVProgressHUD.setDefaultAnimationType(.native)
+    
+        SVProgressHUD.show()
+    }
+    
     private func setNavigationBarImage(){
         self.navigationController?.navigationBar.barTintColor = UIColor(patternImage: #imageLiteral(resourceName: "header DOUE"))
     }
     
     private func updateUI(){
-        //      Make async http call to dou calendar and map to ArticlesModel
-        //      after it finished then call closure where set ArticlesModel and reload tableView
-        //      DispatchQueue.main.async ???
         articleRetriever.getArticlesModel{
             SVProgressHUD.dismiss()
             
@@ -64,7 +65,6 @@ class ArticlesTableVC: UITableViewController {
     @objc func handleRefreshControl() {
         updateUI()
         
-        // Dismiss the refresh control.
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
             self.notification.selectionChanged()
@@ -99,7 +99,6 @@ class ArticlesTableVC: UITableViewController {
         
         destinationVC.articleModel = selectedArticleModel
         
-        // Just retrieve full article description
         articleRetriever.getExtendedArticleModel(url: selectedArticleModel.extendedArticleUrl, completionHandler: {
             SVProgressHUD.dismiss()
 
